@@ -1,0 +1,27 @@
+{
+  "users": [
+    {
+      "id": "1231",
+      "firstName": "Thomas",
+      "lastname": "Stapleton",
+      "email": "email@test.com",
+      "dob": "1993-08-06",
+      "location": "liverpool"
+    },
+    {
+      "id": "1232",
+      "firstName": "Stan",
+      "lastname": "Smith",
+      "email": "email@test.com",
+      "dob": "1984-02-04"
+    },
+    {
+      "id": "1233",
+      "firstName": "Hugo",
+      "lastname": "Boss",
+      "email": "email@test.com",
+      "dob": "1984-02-04",
+      "location": "london"
+    }
+  ]
+}
