@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "'Primal god of the sky' - Location based channel subscriptions.",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jasmine-node ./tests",
     "lint": "jshint src -c .jshintrc",
     "start": "node ./bin/www"
   },
@@ -24,6 +24,7 @@
     "debug": "~2.2.0",
     "express": "~4.13.1",
     "jade": "^1.11.0",
+    "jasmine-node": "^1.14.5",
     "jshint": "^2.8.0",
     "morgan": "^1.6.1",
     "serve-favicon": "~2.3.0"
