@@ -35,12 +35,15 @@ describe('User model', function() {
   });
 
   describe('findUser', function () {
+    beforeEach(function () {
+      this.mockCallback = function () {};
+    });
+
     it('should equal a function', function () {
       expect(userModel.findUser).toEqual(jasmine.any(Function));
     });
 
     it('should throw an error if there is no customerId', function () {
-      this.mockCallback = function () {};
       var mockCustomerId = undefined;
       var customError = 'customerId: ' + mockCustomerId;
 
@@ -50,6 +53,42 @@ describe('User model', function() {
       userModel.findUser.call(null, mockCustomerId, this.mockCallback);
 
       expect(this.mockCallback).toHaveBeenCalledWith(customError);
+    });
+
+    it('should throw an error if there is a error argument', function () {
+      var mockCustomerId = undefined;
+      var mockError = 'Oh no! We couldn\'t get that customer.';
+
+      spyOn(this, 'mockCallback');
+
+      // Cannot use bind so must execute function with call
+      userModel.findUser.call(null, mockCustomerId, this.mockCallback, mockError);
+
+      expect(this.mockCallback).toHaveBeenCalledWith(mockError);
+    });
+
+    it('should return a user if available', function () {
+      var mockCustomerId = 2;
+      var mockError = null;
+      var mockUsers = [
+        {
+          "id": 1,
+          "firstName": "Will",
+          "lastname": "Ferrell"
+        },
+        {
+          "id": 2,
+          "firstName": "Kevin",
+          "lastname": "Spacey"
+        }
+      ];
+
+      spyOn(this, 'mockCallback');
+
+      // Cannot use bind so must execute function with call
+      userModel.findUser.call(null, mockCustomerId, this.mockCallback, mockError, mockUsers);
+
+      expect(this.mockCallback).toHaveBeenCalledWith(mockError, mockUsers[1]);
     });
   });
 });
