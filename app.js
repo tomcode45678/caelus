@@ -6,7 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 // Load routes
-var customerSession = require('./middlewares/customerSession');
 var productSelection = require('./routes/index');
 
 var app = express();
@@ -18,11 +17,12 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser('superSecret'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(require('./middlewares/customerSession'));
+
 // Call routes
-app.use('/', customerSession);
 app.use('/', productSelection);
 
 // Catch 404 and forward to error handler
