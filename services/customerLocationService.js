@@ -1,4 +1,4 @@
-var userModel = require('../models/user');
+var userModel = require('../models/userModel');
 
 exports.getCustomerLocation = function (customerId, callback) {
   customerId = Number(customerId);
