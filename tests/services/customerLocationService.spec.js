@@ -28,7 +28,7 @@ describe('customerLocationService', function() {
 
       customerLocationService.getCustomerLocation(mockCustomerId);
 
-      expect(userModel.getUser).toHaveBeenCalledWith(Number(mockCustomerId), customerLocationService.returnUserLocation);
+      expect(userModel.getUser).toHaveBeenCalledWith(Number(mockCustomerId), jasmine.any(Function));
     });
   });
 

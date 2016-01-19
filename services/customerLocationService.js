@@ -2,8 +2,7 @@ var userModel = require('../models/user');
 
 exports.getCustomerLocation = function (customerId, callback) {
   customerId = Number(customerId);
-  this.returnUserLocation.bind(null, callback);
-  userModel.getUser(customerId, this.returnUserLocation);
+  userModel.getUser(customerId, this.returnUserLocation.bind(null, callback));
 };
 
 // Only for unit testing
