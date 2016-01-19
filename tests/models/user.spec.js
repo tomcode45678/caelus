@@ -35,8 +35,23 @@ describe('User model', function() {
   });
 
   describe('findUser', function () {
+    var mockUsers = [];
+
     beforeEach(function () {
       this.mockCallback = function () {};
+
+      mockUsers = [
+        {
+          "id": 1,
+          "firstName": "Will",
+          "lastname": "Ferrell"
+        },
+        {
+          "id": 2,
+          "firstName": "Kevin",
+          "lastname": "Spacey"
+        }
+      ];
     });
 
     it('should equal a function', function () {
@@ -67,21 +82,9 @@ describe('User model', function() {
       expect(this.mockCallback).toHaveBeenCalledWith(mockError);
     });
 
-    it('should return a user if available', function () {
+    it('should run the callback with a user if available', function () {
       var mockCustomerId = 2;
       var mockError = null;
-      var mockUsers = [
-        {
-          "id": 1,
-          "firstName": "Will",
-          "lastname": "Ferrell"
-        },
-        {
-          "id": 2,
-          "firstName": "Kevin",
-          "lastname": "Spacey"
-        }
-      ];
 
       spyOn(this, 'mockCallback');
 
@@ -89,6 +92,19 @@ describe('User model', function() {
       userModel.findUser.call(null, mockCustomerId, this.mockCallback, mockError, mockUsers);
 
       expect(this.mockCallback).toHaveBeenCalledWith(mockError, mockUsers[1]);
+    });
+
+    it('should run the callback with a error if no user is found', function () {
+      // Modify mockCustomerId so it is never evaluated as true to a user id
+      var mockCustomerId = 'No user';
+      var mockError = null;
+
+      spyOn(this, 'mockCallback');
+
+      // Cannot use bind so must execute function with call
+      userModel.findUser.call(null, mockCustomerId, this.mockCallback, mockError, mockUsers);
+
+      expect(this.mockCallback).toHaveBeenCalledWith(true);
     });
   });
 });
