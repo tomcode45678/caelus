@@ -1,5 +1,5 @@
 var customerLocationService = require('../../services/customerLocationService.js');
-var userModel = require('../../models/user');
+var userModel = require('../../models/userModel');
 
 describe('customerLocationService', function() {
   it('should be defined', function () {
