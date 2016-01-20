@@ -1,4 +1,4 @@
-var userModel = require('../../models/user.js');
+var userModel = require('../../models/userModel.js');
 var fs = require('fs');
 
 describe('User model', function() {
