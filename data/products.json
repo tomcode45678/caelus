@@ -1,0 +1,67 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "name": "Sports"
+    },
+    {
+      "id": 2,
+      "name": "News"
+    },
+    {
+      "id": 3,
+      "name": "TV"
+    },
+    {
+      "id": 4,
+      "name": "Broadband"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "category": 1,
+      "name": "Arsenal TV",
+      "available": 1,
+      "locationId": "GB_EN_LONDON"
+    },
+    {
+      "id": 2,
+      "category": 1,
+      "name": "Chelsea TV",
+      "available": 1,
+      "locationId": "GB_EN_LONDON"
+    },
+    {
+      "id": 3,
+      "category": 1,
+      "name": "Liverpool TV",
+      "available": 1,
+      "locationId": "GB_MERSY_LIVERPOOL"
+    },
+    {
+      "id": 4,
+      "category": 2,
+      "available": 1,
+      "name": "Sky News"
+    },
+    {
+      "id": 5,
+      "category": 2,
+      "available": 1,
+      "name": "Sky Sports News"
+    },
+    {
+      "id": 6,
+      "category": 3,
+      "available": 1,
+      "name": "Sky Movies"
+    },
+    {
+      "id": 7,
+      "category": 4,
+      "available": 0,
+      "name": "Gigabit Internet"
+    }
+  ]
+}
