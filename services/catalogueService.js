@@ -6,7 +6,8 @@ var productsModel = require('../models/productsModel');
 exports.cachedProducts = [];
 
 exports.getLocationBasedProducts = function(locationId, callback) {
-  this.filterProducts(locationId, function (err, products) {
+  var filter = {key: 'location', value: locationId};
+  this.filterProducts(filter, function (err, products) {
     if (err) return callback(err);
     callback(null, products);
   });
@@ -20,12 +21,14 @@ exports.getAvailableProducts = function (callback) {
 exports.filterProducts = function (filter, callback) {
   if (!filter || !filter.key || !filter.value) return callback('filter: ' + filter);
 
+  var catalogueServiceScope = this;
+
   if (this.cachedProducts.length) {
     this.filter(filter, callback);
   } else {
     productsModel.getProducts(function (products) {
       this.cachedProducts = products;
-      this.filter(filter, callback);
+      catalogueServiceScope.filter(filter, callback);
     });
   }
 }

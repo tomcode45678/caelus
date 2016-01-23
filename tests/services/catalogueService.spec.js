@@ -8,18 +8,19 @@ describe('catalogueService', function() {
   });
 
   describe('getLocationBasedProducts', function () {
-    var mockLocationId = 'GB_MERSY_LIVERPOOL';
-
     it('should equal a function', function () {
       expect(catalogueService.getLocationBasedProducts).toEqual(jasmine.any(Function));
     });
 
     it('should call a filter products function', function () {
+      var mockLocationId = 'GB_MERSY_LIVERPOOL';
+      var filter = {key: 'location', value: mockLocationId};
+
       spyOn(catalogueService, 'filterProducts');
 
       catalogueService.getLocationBasedProducts(mockLocationId);
 
-      expect(catalogueService.filterProducts).toHaveBeenCalledWith(mockLocationId, jasmine.any(Function));
+      expect(catalogueService.filterProducts).toHaveBeenCalledWith(filter, jasmine.any(Function));
     });
   });
 
