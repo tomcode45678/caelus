@@ -4,7 +4,7 @@
   "description": "'Primal god of the sky' - Location based channel subscriptions.",
   "scripts": {
     "test": "istanbul cover --include-all-sources node_modules/jasmine-node/bin/jasmine-node tests",
-    "lint": "jshint src -c .jshintrc",
+    "lint": "jshint middlewares models routes services -c .jshintrc",
     "start": "node ./bin/www"
   },
   "license": "ISC",

@@ -1,3 +1,4 @@
+/* globals module */
 // Check for user session
 module.exports = function (req, res, next) {
   if (!req.cookies.customerId) {
@@ -6,4 +7,4 @@ module.exports = function (req, res, next) {
   } else {
     next();
   }
-}
+};

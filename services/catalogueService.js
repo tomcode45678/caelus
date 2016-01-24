@@ -1,3 +1,4 @@
+/* globals require, exports */
 var productsModel = require('../models/productsModel');
 
 /**
@@ -8,7 +9,9 @@ exports.cachedProducts = [];
 exports.getLocationBasedProducts = function(locationId, callback) {
   var filter = {key: 'location', value: locationId};
   this.filterProducts(filter, function (err, products) {
-    if (err) return callback(err);
+    if (err) {
+      return callback(err);
+    }
     callback(null, products);
   });
 };
@@ -16,10 +19,12 @@ exports.getLocationBasedProducts = function(locationId, callback) {
 exports.getAvailableProducts = function (callback) {
   var filter = {key: 'available', value: true};
   this.filterProducts(filter, callback);
-}
+};
 
 exports.filterProducts = function (filter, callback) {
-  if (!filter || !filter.key || !filter.value) return callback('filter: ' + filter);
+  if (!filter || !filter.key || !filter.value) {
+    return callback('filter: ' + filter);
+  }
 
   var catalogueServiceScope = this;
 
@@ -31,7 +36,7 @@ exports.filterProducts = function (filter, callback) {
       catalogueServiceScope.filter(filter, callback);
     });
   }
-}
+};
 
 exports.filter = function (filter, callback) {
   for (var i = 0, productsLength = this.cachedProducts.length; i < productsLength; i++) {
@@ -41,7 +46,7 @@ exports.filter = function (filter, callback) {
     }
   }
   return callback(null, this.cachedProducts);
-}
+};
 
 // Format data for view
 exports.buildCatalogue = function () {

@@ -1,3 +1,4 @@
+/* globals require, module, console */
 var express = require('express');
 var router = express.Router();
 var Promise = require('promise');
@@ -5,8 +6,8 @@ var cls = require('../services/customerLocationService');
 var catalogueService = require('../services/catalogueService');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  var promise = new Promise(function (resolve, reject) {
+router.get('/', function(req, res/*, next*/) {
+  new Promise(function (resolve, reject) {
     cls.getCustomerLocation(req.cookies.customerId, function (err, location) {
       if (location) {
         resolve(location);

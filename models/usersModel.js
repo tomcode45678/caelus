@@ -1,3 +1,4 @@
+/* globals require, module */
 var fs = require('fs');
 var Promise = require('promise');
 var USERS_DATA_PATH = 'data/users.json';
@@ -24,7 +25,9 @@ module.exports = {
   },
 
   findUser: function (customerId, users) {
-    if (!customerId) return this.errorHandler('customerId: ' + customerId);
+    if (!customerId) {
+      return this.errorHandler('customerId: ' + customerId);
+    }
 
     for (var i = 0, usersLength = users.length; i < usersLength; i++) {
       var user = users[i];

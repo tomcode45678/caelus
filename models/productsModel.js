@@ -1,3 +1,4 @@
+/* globals require, module */
 var fs = require('fs');
 var Promise = require('promise');
 var PRODUCTS_DATA_PATH = 'data/products.json';

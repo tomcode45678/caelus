@@ -1,3 +1,4 @@
+/* globals require, exports */
 var usersModel = require('../models/usersModel');
 
 exports.getCustomerLocation = function (customerId, callback) {
@@ -7,6 +8,8 @@ exports.getCustomerLocation = function (customerId, callback) {
 
 // Only for unit testing
 exports.returnUserLocation = function (callback, err, user) {
-  if (err) return callback(err);
+  if (err) {
+    return callback(err);
+  }
   callback(null, user.location);
-}
+};
