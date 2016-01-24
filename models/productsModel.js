@@ -1,29 +1,38 @@
 var fs = require('fs');
+var Promise = require('promise');
 var PRODUCTS_DATA_PATH = 'data/products.json';
 
-exports.getProducts = function (callback) {
-  this.getData('products', callback);
-}
+module.exports = {
+  read: Promise.denodeify(fs.readFile),
 
-exports.getProductCategories = function (callback) {
-  this.getData('categories', callback);
-}
+  getProducts: function () {
+    return this.getData('products');
+  },
 
-exports.getProductsWithCategories = function (callback) {
-  this.getData(null, callback);
-}
+  getProductCategories: function () {
+    return this.getData('categories');
+  },
 
-exports.getData = function (dataBlock, callback) {
-  fs.readFile(PRODUCTS_DATA_PATH, 'utf8', this.dataHandler.bind(null, callback, dataBlock));
-}
+  getProductsWithCategories: function () {
+    return this.getData();
+  },
 
-exports.dataHandler = function (callback, dataBlock, err, data) {
-  if (err) return callback(err);
+  getData: function (dataBlock) {
+    this.getDataSuccessHandler.bind(null, dataBlock);
 
-  if (dataBlock) {
-    callback(JSON.parse(data)[dataBlock]);
+    return this.read(PRODUCTS_DATA_PATH, 'utf8').then(this.getDataSuccessHandler, this.getDataErrorHandler);
+  },
+
+  getDataSuccessHandler: function (dataBlock, data) {
+    if (dataBlock) {
+      return JSON.parse(data)[dataBlock];
+    }
+    else {
+      return JSON.parse(data);
+    }
+  },
+
+  getDataErrorHandler: function (error) {
+    return error;
   }
-  else {
-    callback(JSON.parse(data));
-  }
-}
+};
