@@ -1,8 +1,8 @@
-var userModel = require('../models/userModel');
+var usersModel = require('../models/usersModel');
 
 exports.getCustomerLocation = function (customerId, callback) {
   customerId = Number(customerId);
-  userModel.getUser(customerId, this.returnUserLocation.bind(null, callback));
+  usersModel.getUser(customerId, this.returnUserLocation.bind(null, callback));
 };
 
 // Only for unit testing

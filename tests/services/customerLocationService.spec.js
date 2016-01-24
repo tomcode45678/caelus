@@ -1,5 +1,5 @@
 var customerLocationService = require('../../services/customerLocationService.js');
-var userModel = require('../../models/userModel');
+var usersModel = require('../../models/usersModel');
 
 describe('customerLocationService', function() {
   it('should be defined', function () {
@@ -24,11 +24,11 @@ describe('customerLocationService', function() {
     it('should call a getUser api', function () {
       var mockCustomerId = '1028';
 
-      spyOn(userModel, 'getUser');
+      spyOn(usersModel, 'getUser');
 
       customerLocationService.getCustomerLocation(mockCustomerId);
 
-      expect(userModel.getUser).toHaveBeenCalledWith(Number(mockCustomerId), jasmine.any(Function));
+      expect(usersModel.getUser).toHaveBeenCalledWith(Number(mockCustomerId), jasmine.any(Function));
     });
   });
 
