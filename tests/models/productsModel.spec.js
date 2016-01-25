@@ -1,4 +1,5 @@
 var productsModel = require('../../models/productsModel.js');
+var Promise = require('promise');
 
 describe('productsModel', function () {
   it('should be defined', function () {
@@ -14,6 +15,16 @@ describe('productsModel', function () {
   describe('getProducts', function () {
     it('should be equal to a function', function () {
       expect(productsModel.getProducts).toEqual(jasmine.any(Function));
+    });
+
+    it('should return a promise', function () {
+      var testMethod = productsModel.getProducts();
+
+      var test = (testMethod.then instanceof Function
+        && testMethod["catch"] instanceof Function
+        && testMethod["finally"] instanceof Function);
+
+      expect(test).toBe(true);
     });
 
     it('should call a get data function', function () {

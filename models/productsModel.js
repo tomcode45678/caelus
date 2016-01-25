@@ -7,7 +7,9 @@ module.exports = {
   read: Promise.denodeify(fs.readFile),
 
   getProducts: function () {
-    return this.getData('products');
+    return new Promise(function (resolve) {
+      resolve(this.getData('products'));
+    });
   },
 
   getProductCategories: function () {
