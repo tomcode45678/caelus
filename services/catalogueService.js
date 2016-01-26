@@ -1,54 +1,61 @@
-/* globals require, exports */
+/* globals require, module */
 var productsModel = require('../models/productsModel');
 
 /**
  * Class which builds a custom catalogue, using products and category data
  */
-exports.cachedProducts = [];
+module.exports = {
+  cachedProducts: [],
 
-exports.getLocationBasedProducts = function(locationId, callback) {
-  var filter = {key: 'location', value: locationId};
-  this.filterProducts(filter, function (err, products) {
-    if (err) {
-      return callback(err);
-    }
-    callback(null, products);
-  });
-};
+  getLocationBasedProducts: function(locationId) {
+    var filter = {key: 'location', value: locationId};
 
-exports.getAvailableProducts = function (callback) {
-  var filter = {key: 'available', value: true};
-  this.filterProducts(filter, callback);
-};
-
-exports.filterProducts = function (filter, callback) {
-  if (!filter || !filter.key || !filter.value) {
-    return callback('filter: ' + filter);
-  }
-
-  var catalogueServiceScope = this;
-
-  if (this.cachedProducts.length) {
-    this.filter(filter, callback);
-  } else {
-    productsModel.getProducts(function (products) {
-      this.cachedProducts = products;
-      catalogueServiceScope.filter(filter, callback);
+    return this.filterProducts(filter, function (err, products) {
+      if (err) {
+        return err;
+      }
+      return products;
     });
-  }
-};
+  },
 
-exports.filter = function (filter, callback) {
-  for (var i = 0, productsLength = this.cachedProducts.length; i < productsLength; i++) {
-    var product = this.cachedProducts[i];
-    if (product[filter.key] !== filter.value) {
-      this.cachedProducts.splice(i, 1);
+  getAvailableProducts: function () {
+    var filter = {key: 'available', value: true};
+    return this.filterProducts(filter);
+  },
+
+  filterProducts: function (filter) {
+    if (!filter || !filter.key || !filter.value) {
+      return 'filter: ' + filter;
     }
+
+    if (this.cachedProducts.length) {
+      return this.filter(filter);
+    } else {
+      return this.getProducts(filter);
+    }
+  },
+
+  getProducts: function (filter) {
+    return productsModel.getProducts().then(this.setCachedProducts.bind(null, filter));
+  },
+
+  setCachedProducts: function (filter, products) {
+    this.cachedProducts = products;
+    return this.filter(filter);
+  },
+
+  filter: function (filter) {
+    for (var i = 0, productsLength = this.cachedProducts.length; i < productsLength; i++) {
+      var product = this.cachedProducts[i];
+      if (product[filter.key] !== filter.value) {
+        this.cachedProducts.splice(i, 1);
+      }
+    }
+    return this.cachedProducts;
+  },
+
+  // Format data for view
+  buildCatalogue: function () {
+
   }
-  return callback(null, this.cachedProducts);
-};
-
-// Format data for view
-exports.buildCatalogue = function () {
-
 };

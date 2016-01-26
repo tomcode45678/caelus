@@ -41,10 +41,6 @@ describe('catalogueService', function() {
   });
 
   describe('filterProducts', function () {
-    beforeEach(function () {
-      this.mockCallback = function () {};
-    });
-
     it('should equal a function', function () {
       expect(catalogueService.filterProducts).toEqual(jasmine.any(Function));
     });
@@ -53,11 +49,9 @@ describe('catalogueService', function() {
       var filter;
       var expectedErrorMessage = 'filter: ' + filter;
 
-      spyOn(this, 'mockCallback');
+      var compare = catalogueService.filterProducts(filter);
 
-      catalogueService.filterProducts(filter, this.mockCallback);
-
-      expect(this.mockCallback).toHaveBeenCalledWith(expectedErrorMessage);
+      expect(compare).toEqual(expectedErrorMessage);
     });
 
     it('should call a filter method if there are products available', function () {
@@ -69,26 +63,22 @@ describe('catalogueService', function() {
 
       catalogueService.filterProducts(filter, this.mockCallback);
 
-      expect(catalogueService.filter).toHaveBeenCalledWith(filter, this.mockCallback);
+      expect(catalogueService.filter).toHaveBeenCalledWith(filter);
     });
 
     it('should call the populate the cached products if there are none', function () {
       var expectedFilter = {key: 'compare', value: 'mustBeThisValue'};
       catalogueService.cachedProducts = [];
 
-      spyOn(productsModel, 'getProducts');
+      spyOn(productsModel, 'getProducts').andCallThrough();
 
-      catalogueService.filterProducts(expectedFilter, this.mockCallback);
+      catalogueService.filterProducts(expectedFilter);
 
-      expect(productsModel.getProducts).toHaveBeenCalledWith(jasmine.any(Function));
+      expect(productsModel.getProducts).toHaveBeenCalled();
     });
   });
 
   describe('filter', function () {
-    beforeEach(function () {
-      this.mockCallback = function () {};
-    });
-
     it('should equal a function', function () {
       expect(catalogueService.filter).toEqual(jasmine.any(Function));
     });
@@ -113,11 +103,9 @@ describe('catalogueService', function() {
       var filter = {key: 'locationId', value: 'GB_EN_LONDON'};
       catalogueService.cachedProducts = mockProducts;
 
-      spyOn(this, 'mockCallback');
+      var compare = catalogueService.filter(filter, this.mockCallback);
 
-      catalogueService.filter(filter, this.mockCallback);
-
-      expect(this.mockCallback).toHaveBeenCalledWith(null, [productToReturn]);
+      expect(compare).toEqual([productToReturn]);
     });
   });
 
