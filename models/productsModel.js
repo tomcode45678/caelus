@@ -3,12 +3,12 @@ var fs = require('fs');
 var Promise = require('promise');
 var PRODUCTS_DATA_PATH = 'data/products.json';
 
-module.exports = {
+var ProductsModel = {
   read: Promise.denodeify(fs.readFile),
 
   getProducts: function () {
     return new Promise(function (resolve) {
-      resolve(this.getData('products'));
+      resolve(ProductsModel.getData('products'));
     });
   },
 
@@ -39,3 +39,5 @@ module.exports = {
     return error;
   }
 };
+
+module.exports = ProductsModel;

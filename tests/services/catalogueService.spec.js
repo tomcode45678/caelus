@@ -25,10 +25,6 @@ describe('catalogueService', function() {
   });
 
   describe('getAvailableProducts', function () {
-    beforeEach(function () {
-      this.mockCallback = function () {};
-    });
-
     it('should equal a function', function () {
       expect(catalogueService.getAvailableProducts).toEqual(jasmine.any(Function));
     });
@@ -38,9 +34,9 @@ describe('catalogueService', function() {
 
       spyOn(catalogueService, 'filterProducts');
 
-      catalogueService.getAvailableProducts(this.mockCallback);
+      catalogueService.getAvailableProducts();
 
-      expect(catalogueService.filterProducts).toHaveBeenCalledWith(expectedFilter, this.mockCallback);
+      expect(catalogueService.filterProducts).toHaveBeenCalledWith(expectedFilter);
     });
   });
 
