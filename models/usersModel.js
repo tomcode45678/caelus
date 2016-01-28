@@ -8,8 +8,9 @@ module.exports = {
 
   getUser: function (customerId) {
     this.findUser.bind(null, customerId);
-
-    return this.getUsers().then(this.findUser);
+    return new Promise(function (resolve) {
+      resolve(this.getUsers().then(this.findUser));
+    });
   },
 
   getUsers: function () {

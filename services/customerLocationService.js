@@ -1,15 +1,16 @@
-/* globals require, exports */
+/* globals require, module */
 var usersModel = require('../models/usersModel');
 
-exports.getCustomerLocation = function (customerId, callback) {
-  customerId = Number(customerId);
-  usersModel.getUser(customerId, this.returnUserLocation.bind(null, callback));
-};
+module.exports = {
+  getCustomerLocation: function (customerId) {
+    customerId = Number(customerId);
+    return usersModel.getUser(customerId).then(this.returnUserLocation);
+  },
 
-// Only for unit testing
-exports.returnUserLocation = function (callback, err, user) {
-  if (err) {
-    return callback(err);
+  returnUserLocation: function (user) {
+    if (!user) {
+      throw new Error('user: ' + user);
+    }
+    return user.location;
   }
-  callback(null, user.location);
 };

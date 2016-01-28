@@ -24,31 +24,26 @@ describe('customerLocationService', function() {
     it('should call a getUser api', function () {
       var mockCustomerId = '1028';
 
-      spyOn(usersModel, 'getUser');
+      spyOn(usersModel, 'getUser').andCallThrough();
 
       customerLocationService.getCustomerLocation(mockCustomerId);
 
-      expect(usersModel.getUser).toHaveBeenCalledWith(Number(mockCustomerId), jasmine.any(Function));
+      expect(usersModel.getUser).toHaveBeenCalledWith(Number(mockCustomerId));
     });
   });
 
   describe('returnUserLocation', function () {
-    beforeEach(function () {
-      this.mockCallback = function () {};
-    });
-
     it('should equal a function', function () {
       expect(customerLocationService.returnUserLocation).toEqual(jasmine.any(Function));
     });
 
     it('should run the callback with an error if present', function () {
-      var mockError = 'Oh no! We couldn\'t get that customer.';
+      var mockUser = undefined;
+      var errorMessage = 'user: ' + mockUser;
+      var compare = customerLocationService.returnUserLocation;
 
-      spyOn(this, 'mockCallback');
-
-      customerLocationService.returnUserLocation(this.mockCallback, mockError, undefined);
-
-      expect(this.mockCallback).toHaveBeenCalledWith(mockError);
+      // Using bind rather than wrapping in anonymous function
+      expect(compare.bind(null, mockUser)).toThrow(new Error(errorMessage));
     });
 
     it('should run the callback with the users location if a user is present', function () {
@@ -57,11 +52,9 @@ describe('customerLocationService', function() {
       };
       var mockError = null;
 
-      spyOn(this, 'mockCallback');
+      var compare = customerLocationService.returnUserLocation(mockUser);
 
-      customerLocationService.returnUserLocation(this.mockCallback, mockError, mockUser);
-
-      expect(this.mockCallback).toHaveBeenCalledWith(mockError, mockUser.location);
+      expect(compare).toEqual(mockUser.location);
     });
   });
 });

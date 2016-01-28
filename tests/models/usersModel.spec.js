@@ -27,12 +27,14 @@ describe('Users model', function() {
       expect(usersModel.findUser.bind).toHaveBeenCalledWith(null, customerId);
     });
 
-    it('should call a user collection method', function () {
-      spyOn(usersModel, 'getUsers').andCallThrough();
+    it('should return a promise', function () {
+      var testMethod = usersModel.getUser();
 
-      usersModel.getUser();
+      var test = (testMethod.then instanceof Function
+        && testMethod["catch"] instanceof Function
+        && testMethod["finally"] instanceof Function);
 
-      expect(usersModel.getUsers).toHaveBeenCalled();
+      expect(test).toBe(true);
     });
   });
 
