@@ -3,13 +3,13 @@ var fs = require('fs');
 var Promise = require('promise');
 var USERS_DATA_PATH = 'data/users.json';
 
-module.exports = {
+var UsersModel = {
   read: Promise.denodeify(fs.readFile),
 
   getUser: function (customerId) {
-    this.findUser.bind(null, customerId);
     return new Promise(function (resolve) {
-      resolve(this.getUsers().then(this.findUser));
+      var findUser = UsersModel.findUser.bind(null, customerId);
+      resolve(UsersModel.getUsers().then(findUser));
     });
   },
 
@@ -39,3 +39,5 @@ module.exports = {
     return null;
   }
 };
+
+module.exports = UsersModel;

@@ -21,9 +21,9 @@ var ProductsModel = {
   },
 
   getData: function (dataBlock) {
-    this.getDataSuccessHandler.bind(null, dataBlock);
+    var successHandler = this.getDataSuccessHandler.bind(null, dataBlock);
 
-    return this.read(PRODUCTS_DATA_PATH, 'utf8').then(this.getDataSuccessHandler, this.getDataErrorHandler);
+    return this.read(PRODUCTS_DATA_PATH, 'utf8').then(successHandler, this.getDataErrorHandler);
   },
 
   getDataSuccessHandler: function (dataBlock, data) {

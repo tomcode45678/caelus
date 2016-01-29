@@ -14,13 +14,13 @@ describe('catalogueService', function() {
 
     it('should call a filter products function', function () {
       var mockLocationId = 'GB_MERSY_LIVERPOOL';
-      var filter = {key: 'location', value: mockLocationId};
+      var filter = {key: 'locationId', value: mockLocationId};
 
       spyOn(catalogueService, 'filterProducts');
 
       catalogueService.getLocationBasedProducts(mockLocationId);
 
-      expect(catalogueService.filterProducts).toHaveBeenCalledWith(filter, jasmine.any(Function));
+      expect(catalogueService.filterProducts).toHaveBeenCalledWith(filter);
     });
   });
 
@@ -83,7 +83,7 @@ describe('catalogueService', function() {
       expect(catalogueService.filter).toEqual(jasmine.any(Function));
     });
 
-    it('should pass the filtered products into the callback', function () {
+    it('should filter the cached filtered products', function () {
       var productToReturn = {
         "id": 1,
         "category": 1,
@@ -103,9 +103,9 @@ describe('catalogueService', function() {
       var filter = {key: 'locationId', value: 'GB_EN_LONDON'};
       catalogueService.cachedProducts = mockProducts;
 
-      var compare = catalogueService.filter(filter, this.mockCallback);
+      catalogueService.filter(filter);
 
-      expect(compare).toEqual([productToReturn]);
+      expect(catalogueService.cachedProducts).toEqual([productToReturn]);
     });
   });
 
